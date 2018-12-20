@@ -1,10 +1,6 @@
 import { Provider } from "web3/providers";
 
 declare global {
-  interface HashMap<K, V> {
-    [key: K]: V;
-  }
-
   interface HashMapStringTo<T> {
     [key: string]: T;
   }
@@ -54,7 +50,7 @@ declare global {
 
     }
 
-    type NetworkEvents = HashMapStringTo<AbiEvent>
+    type NetworkEvents = HashMapStringTo<Artifacts.AbiEvent>
 
 
     interface Network {
@@ -63,10 +59,10 @@ declare global {
     }
 
     interface Wallet {
-
+      // TODO
     }
 
-    interface Contract<T> extends ContractNew<any[]>, Artifact.JSON {
+    interface Contract<T> extends ContractNew<any[]>, Artifacts.JSON {
       // constructor methods (in order of appearance)
 
       setProvider(provider: Provider): void;
@@ -101,8 +97,6 @@ declare global {
       autoGas: boolean;
       numberFormat: "BigNumber" | "BN" | "String";
       network: () => Network;
-      /** @override */
-      networks: () => Network[];
       address: string;
       transactionHash: string;
       links: () => NetworkLinks;
@@ -110,6 +104,15 @@ declare global {
       binary: () => string;
       deployedBinary: () => string;
 
+      /**
+       * We *SHOULD* override the property from Artifact, but it's incompatible.
+       * This property should have type of () => Artifacts.Network  
+       * Usage:  
+       * ((Zombie.networks as any) as Function)(),
+       * @override
+       * 
+       * */
+      networks: Artifacts.Networks;
     }
 
     interface ContractInstance {
@@ -135,7 +138,7 @@ declare global {
   }
 }
 
-declare namespace Artifact {
+declare namespace Artifacts {
   interface JSON {
     abi: AbiFunction[];
     bytecode: string;
@@ -150,12 +153,7 @@ declare namespace Artifact {
       version: string;
     };
 
-    networks: HashMapStringTo<{
-      events: any; // TODO
-      links: HashMap<Contract, Address>; // Contract -> Address
-      address: string;
-      transactionHash: string;
-    }>;
+    networks: Networks;
 
     schemaVersion: string;
     updatedAt: string;
@@ -182,6 +180,15 @@ declare namespace Artifact {
     name: string;
     type: string;
   }
+
+  interface Network {
+    events: HashMapStringTo<AbiEvent>; // TODO
+    links: HashMapStringTo<Address>; // Contract -> Address
+    address?: string; // these two I haven't seen used anywhere in code
+    transactionHash?: string;
+  }
+
+  type Networks = HashMapStringTo<Network>;
 
   type Address = string;
   type Contract = string;
