@@ -15,8 +15,13 @@ declare global {
 	 */
 	function contract(name: string, test: (accounts: Truffle.Accounts) => void): void;
 
+	// to ensure backwards compatibility with ONE example project
+	const assert: Chai.AssertStatic;
+	const expect: Chai.ExpectStatic;
+
+
 	/**
-	 * Namespace
+	 * Main Truffle namespace
 	 */
 	namespace Truffle {
 		type Accounts = string[];
