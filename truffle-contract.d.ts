@@ -5,9 +5,9 @@ declare interface HashMapStringTo<T> {
 }
 
 declare global {
-  /**
-   * Namespace
-   */
+	/**
+	 * Namespace
+	 */
 	namespace Truffle {
 		type Accounts = string[];
 		type HexString = string;
@@ -77,12 +77,12 @@ declare global {
 			setWallet(wallet: Wallet);
 			resetAddress(): void;
 			link(name: string, address: Address);
-      /**
-       * 
-       * @param json Object -> merge in the JSON data, 
-       * network_id -> clone and set network_id. 
-       * Something like that.
-       */
+			/**
+			 * 
+			 * @param json Object -> merge in the JSON data, 
+			 * network_id -> clone and set network_id. 
+			 * Something like that.
+			 */
 			clone(json: Object | string);
 			addProp(key: string, fn: Function); // TODO: what does it do?
 			toJson(): string;
@@ -104,14 +104,14 @@ declare global {
 			binary: () => string;
 			deployedBinary: () => string;
 
-      /**
-       * We *SHOULD* override the property from Artifact, but it's incompatible.
-       * This property should have type of () => Artifacts.Network  
-       * Usage:  
-       * ((Zombie.networks as any) as Function)(),
-       * @override
-       * 
-       * */
+			/**
+			 * We *SHOULD* override the property from Artifact, but it's incompatible.
+			 * This property should have type of () => Artifacts.Network  
+			 * Usage:  
+			 * ((Zombie.networks as any) as Function)(),
+			 * @override
+			 * 
+			 * */
 			networks: Artifacts.Networks;
 		}
 
