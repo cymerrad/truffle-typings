@@ -2,7 +2,7 @@ import "./truffle-contract"
 
 declare module 'truffle-contract' {
 
-  function contract<T>(json: Object): Truffle.Contract<T>;
+  function contract<T>(json: any): Truffle.Contract<T>;
 
   export = contract;
 }
