@@ -5,6 +5,16 @@ declare interface HashMapStringTo<T> {
 }
 
 declare global {
+	const artifacts: Truffle.Artifacts;
+
+	/**
+	 * Describe a set of nested tests for a contract with the given `name` and 
+	 * with `accounts` contained in the network.
+	 *
+	 * - _Only available when invoked via the truffle test._
+	 */
+	function contract(name: string, test: (accounts: Truffle.Accounts) => void): void;
+
 	/**
 	 * Namespace
 	 */
@@ -74,17 +84,17 @@ declare global {
 			isDeployed(): boolean;
 			detectNetwork(): Promise<NetworkInfo>;
 			setNetwork(networkId: string | number): void;
-			setWallet(wallet: Wallet);
+			setWallet(wallet: Wallet): void;
 			resetAddress(): void;
-			link(name: string, address: Address);
+			link(name: string, address: Address): void;
 			/**
 			 * 
 			 * @param json Object -> merge in the JSON data, 
 			 * network_id -> clone and set network_id. 
 			 * Something like that.
 			 */
-			clone(json: Object | string);
-			addProp(key: string, fn: Function); // TODO: what does it do?
+			clone(json: Object | string): Contract<T>; // NOT_SURE
+			addProp(key: string, fn: Function): void; // TODO: what does it do?
 			toJson(): string;
 
 			// properties (in order of appearance)
